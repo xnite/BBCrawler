@@ -1,0 +1,2 @@
+ALTER TABLE `servers`
+ADD `favicon` TEXT ( 8192 ) NULL DEFAULT NULL;

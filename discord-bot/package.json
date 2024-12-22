@@ -1,0 +1,17 @@
+{
+  "name": "bbcrawler-discord-bot",
+  "version": "0.0.4",
+  "description": "The Break Blocks Crawler Discord Bot.",
+  "author": "Robert Whitney <Me@Rob.cat>",
+  "license": "GNU AGPLv3",
+  "main": "DiscordBot.js",
+  "scripts": {
+      "start": "node DiscordBot.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "commandos": "^0.10.2",
+    "discord.js": "^14.15.3",
+    "amqplib": "^0.10.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "name": "bbcrawler-api",
+    "version": "1.0.3",
+    "description": "The BreakBlocks Crawler API.",
+    "author": "Robert Whitney <Me@Rob.cat>",
+    "license": "GNU AGPLv3",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "mysql": "^2.18.1",
+        "commandos": "^0.10.0",
+        "maxmind": "^4.3.0",
+        "amqplib": "^0.10.0",
+        "table": "^6.8.0",
+        "moment": "^2.29.0",
+        "mastodon": "^1.0.0",
+        "axios": "^1.7.2"
+    }
+}

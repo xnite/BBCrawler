@@ -1,0 +1,25 @@
+# This docker-compose file is for running the scanner independently from the rest of the services. This is useful if you want to run the scanner on a separate server from the rest of the services, or if you want to run multiple instances of the scanner service on different servers.
+# You can run as many instances of the scanner service as you want, as long as they can connect to the rabbitmq service. No extra configuration is needed to run multiple instances of the scanner service, just deploy the service on as many servers as you want with as many replicas as you want.
+# When you perform scans the scanner will automatically distribute the scans across all instances of the scanner service that are connected to the rabbitmq service.
+# This is best used when performing scans against many different unique IP address ranges, as each instance of the scanner service will be able to scan a different range from the queue.
+# A good example of this would be performing a scan against an ASN which will add every IP address range owned by that ASN to the queue.
+# Please forgive me for reminding you again that this is for educational purposes only, and you should only scan IP addresses that you own or have permission to scan. You should never use this software for malicious intents blah blah blah.
+version: '3.9'
+services:
+  scanner:
+    build: ./scanner/
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    deploy:
+      replicas: 1 # Do not set this to a number higher than the number of CPU cores on your server.
+    environment:
+      CONCURRENT_SCANS: 1
+      CONCURRENT_CONNECTIONS: 50000 # Be sure to adjust this accordingly with your concurrent scans and replicas.
+      QUEUE_NAME: range-scan-queue
+      QUEUE_HOST: "rabbitmq.example.com"
+      QUEUE_USERNAME: "scanner"
+      QUEUE_PASSWORD: "DEFINITELY-NOT-PASSWORD"
+      DEBUG: 0
+      VERBOSE: 0 
+    restart: always

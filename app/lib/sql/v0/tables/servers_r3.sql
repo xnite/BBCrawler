@@ -1,0 +1,3 @@
+ALTER TABLE `servers`
+ADD `asn_number` VARCHAR ( 32 ) NULL DEFAULT NULL,
+ADD `asn_name` VARCHAR ( 128 ) NULL DEFAULT NULL;

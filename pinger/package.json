@@ -1,0 +1,19 @@
+{
+    "name": "bbcrawler-pinger",
+    "version": "0.1.2",
+    "description": "Minecraft Server Pinger for BBCrawler",
+    "author": "Robert Whitney <Me@Rob.cat>",
+    "license": "GNU AGPLv3",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "mysql": "^2.18.1",
+        "commandos": "^0.10.0",
+        "maxmind": "^4.3.0",
+        "amqplib": "^0.10.0",
+        "minecraft-status": "^1.0.0",
+        "discord.js": "^14.15.3"
+    }
+}

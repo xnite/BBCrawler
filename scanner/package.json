@@ -1,0 +1,19 @@
+{
+    "name": "phantom-sweep",
+    "version": "0.1.1",
+    "description": "Minecraft Server Scanner for BBCrawler",
+    "author": "Robert Whitney <Me@Rob.cat>",
+    "license": "GNU AGPLv3",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "amqplib": "^0.10.0",
+        "cidr-split": "^0.1.2",
+        "commandos": "^0.10.0",
+        "evilscan": "^1.8.1",
+        "minecraft-status": "^1.0.0",
+        "mysql": "^2.18.1"
+    }
+}

@@ -1,0 +1,83 @@
+version: '3.9'
+services:
+  api:
+    build: ./app/
+    container_name: app
+    env_file: ./production.env
+    environment:
+    restart: always
+    depends_on:
+      - database
+      - rabbitmq
+
+# Scanner Service:
+## Note that you may not want this on the same server as the API, as it can be resource intensive.
+## Most hosts are not very happy with the amount of connections this service makes and they will likely suspend your services if you use this on a shared host.
+## Even non-shared hosts may not be happy with the amount of connections this service makes and traffic it generates.
+## Furthermore many hosts which are target of your scans will submit abuse reports to your host, which may result in suspension of your services.
+## You have been warned.
+## That being said, this entire project is for educational purposes only and should not be used for malicious purposes.
+## Also note that the scanner service can run on any multitude of other servers (3, 4, 5, 100 other servers at a time) as long as they are able to connect to the rabbitmq service. By default this configuration will run on a single host.
+  scanner:
+    build: ./scanner/
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    deploy:
+      # You can increase the number of replicas to increase the number of concurrent scans.
+      # It is not recommended to increase the number of replicas beyond the number of CPU cores on your server. (if you have 4 cores, you can set replicas as high as 4)
+      # Also be aware of how many concurrent connections your server can handle. You will need to find the balance between replicas and concurrent connections that works best for your server's networking & cpu resources.
+      replicas: 1
+    depends_on: 
+      - database
+      - rabbitmq
+    env_file: ./production.env
+
+    restart: always
+# Pinger Service:
+## Note that you may not want this on the same server as the API, as it can be resource intensive.
+## Having this on the same host as the scanner may also result in lesser performance for both services.
+## Servers running the pinger service will be making a lot of connections to the servers being pinged, which may result in abuse reports being submitted to your host.
+## This is much less likely, and much less resource intesnive than the scanner service, but it is still a possibility.
+## You have been warned.
+## Like the scanner service, the pinger service can run on any multitude of other servers (3, 4, 5, 100 other servers at a time) as long as they are able to connect to the rabbitmq service. By default this configuration will run on a single host.
+## I built this to be completely scalable, so you can run as many pinger services as you want, as long as they can connect to the rabbitmq service.
+  pinger:
+    build: ./pinger/
+    deploy:
+      replicas: 4
+    depends_on: 
+      - database
+      - rabbitmq
+    env_file: ./production.env
+    restart: always
+  database:
+    image: mariadb:latest
+    container_name: database
+    env_file: ./production.env
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    hostname: rabbitmq
+    volumes:
+        - ./data/rabbitmq-log:/var/log/rabbitmq
+        - ./data/rabbitmq-lib/:/var/lib/rabbitmq
+    env_file: ./production.env
+    ports:
+          # AMQP protocol port
+          # Uncomment this if you want to scale out services such as scanning or pinging to remote machines.
+          # - '5672:5672'
+          # HTTP management UI
+          # - '15672:15672'
+  discord-bot:
+    build: ./discord-bot/
+    container_name: discord-bot
+    depends_on: 
+      - app
+    environment:
+      API_URL: "http://api:8080"
+      DISCORD_TOKEN: "DISCORD-BOT-TOKEN-GOES-HERE"
+      DEBUG: 0
+      VERBOSE: 0
+    restart: always
