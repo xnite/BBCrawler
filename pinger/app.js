@@ -9,7 +9,7 @@ const Discord = require('discord.js');
 
 var since_last_log = 0;
 
-const webhookClient = new Discord.WebhookClient({ url: "https://discord.com/api/webhooks/1249899934573137993/SxFJvc_i02LqxFFEavJnjP3LRqm8M-aOSGL2w5xWH4L0qETEnE4fYEo8K3K5rD4iFwz8" });
+const webhookClient = new Discord.WebhookClient({ url: process.env.DISCORD_WEBHOOK_URL });
 
 App.announceServerUpdate = function (Server) {
     if (!webhookClient) { return; }
