@@ -32,4 +32,4 @@ If you are running the scanner separately from the other services then be sure t
 Please feel free to join the [Break Blocks Club Discord](https://discord.gg/3RUjaRzdKv) for support.
 
 ### Speaking of support
-It would be really super awesome of you if you could please support the development of this project through [Patreon](patreon.com/BreakBlocks). It only takes a second of your time to be a real skibidi rizzler.
+It would be really super awesome of you if you could please support the development of this project through [Patreon](https://patreon.com/BreakBlocks). It only takes a second of your time to be a real skibidi rizzler.
