@@ -28,7 +28,7 @@ function scan(opts, callback) {
     var SCAN_OPTS_PORTS = (opts.ports || MINECRAFT_DEFAULT_PORT).toString();
     
     var SCAN_OPTS_CONCURRENCY = process.env.CONCURRENT_CONNECTIONS || 1000;
-    exec('masscan --wait 1 --rate ' + SCAN_OPTS_CONCURRENCY + ' -oL ./' + SCAN_OPTS_HOSTS.replace(/\./g, '-').replace(/\//g, '_') + "_" + SCAN_OPTS_PORTS + ".tmp -p " +SCAN_OPTS_PORTS+" " + SCAN_OPTS_HOSTS, (err, stdout, stderr) => {
+    exec('masscan --exclude /etc/exclude.txt --wait 1 --rate ' + SCAN_OPTS_CONCURRENCY + ' -oL ./' + SCAN_OPTS_HOSTS.replace(/\./g, '-').replace(/\//g, '_') + "_" + SCAN_OPTS_PORTS + ".tmp -p " +SCAN_OPTS_PORTS+" " + SCAN_OPTS_HOSTS, (err, stdout, stderr) => {
         if (err) {
             return callback(err, null);
         }
